@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest, { params }: { params: { userId: stri
     let userAcceptanceRate: number = 0;
 
     // create an array for all users
-    const allUsers = [];
+    let allUsers = [];
 
     // each user has the following properties: userId, username, name, email, acceptanceRate, ranking, totalSolvedProblems
     allUsers = await prisma.user.findMany({
@@ -24,7 +24,7 @@ export const GET = async (req: NextRequest, { params }: { params: { userId: stri
 
 
     // get the total number of submissions of each user and the number of accepted submissions of each user to calculate the acceptance rate of each user (acceptanceRate) and place them in each user object
-    for (const user of allUsers) {
+    for (let user of allUsers) {
         const totalSubmissions = await prisma.submission.count({
             where: {
                 userId: user.userId

@@ -1,7 +1,7 @@
-import { db } from '@/lib/db';
+import prisma from '@/lib/prisma';
 import { NextResponse, NextRequest } from 'next/server';
 
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest ) => {
     const { userId, problemId } = await req.json();
 
     if (!userId || !problemId) {
@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     }
 
     try {
-        const existingStar = await db.starredProblems.findFirst({
+        const existingStar = await prisma.starredProblems.findFirst({
             where: {
                 userId: userId,
                 problemId: problemId,
@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
         if (existingStar) {
             // Unstar: Remove the existing star
-            await db.starredProblems.delete({
+            await prisma.starredProblems.delete({
                 where: {
                     starredProblemId: existingStar.starredProblemId,
                 },
@@ -26,7 +26,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             return NextResponse.json({ message: "Problem unstarred successfully" }, { status: 200 });
         } else {
             // Star: Create a new star
-            await db.starredProblems.create({
+            await prisma.starredProblems.create({
                 data: {
                     userId: userId,
                     problemId: problemId,

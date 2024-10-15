@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import prisma from "@/lib/prisma";
 
 type ProblemUserParams = {
     idTitle: string;
@@ -11,25 +11,25 @@ export const GET = async (req: Request, { params }: { params: ProblemUserParams 
     const { idTitle, userId } = params;
     try {
         // Get the problem id from the idTitle
-        const problem = await db.problem.findUnique({
+        const problem = await prisma.problem.findUnique({
             where: {
                 idTitle: idTitle,
             }
         });
         // Check if the user has liked the problem and return true. If not, return false.
-        const liked = await db.likedProblems.findFirst({
+        const liked = await prisma.likedProblems.findFirst({
             where: {
                 problemId: problem?.problemId,
                 userId: userId,
             }
         });
-        const starred = await db.starredProblems.findFirst({
+        const starred = await prisma.starredProblems.findFirst({
             where: {
                 problemId: problem?.problemId,
                 userId: userId,
             }
         });
-        const solved = await db.solvedProblems.findFirst({
+        const solved = await prisma.solvedProblems.findFirst({
             where: {
                 problemId: problem?.problemId,
                 userId: userId,

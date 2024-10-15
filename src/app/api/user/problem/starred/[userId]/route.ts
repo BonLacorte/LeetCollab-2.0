@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import prisma from "@/lib/prisma";
 
 export const GET = async (req: Request, { params }: { params: { userId: string } }) => {
     const { userId } = params;
     try {
-        const starredProblems = await db.starredProblems.findMany({
+        const starredProblems = await prisma.starredProblems.findMany({
             where: { userId: userId },
             include: {
                 problem: true,

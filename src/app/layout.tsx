@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Provider from "@/components/provider/SessionProvider";
+import { SocketProvider } from "@/components/provider/SocketProvider";
+import { Toaster } from "@/components/ui/toaster";
+import LeetCollabWrapper from "./LeetCollabWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +32,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Provider>
+            <SocketProvider>
+                <LeetCollabWrapper>{children}</LeetCollabWrapper>
+                <Toaster />
+            </SocketProvider>
+        </Provider>
       </body>
     </html>
   );

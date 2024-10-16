@@ -54,6 +54,29 @@ export interface UpdateUserProfile {
     image: string;
 }
 
+export interface UserStarredProblem {
+    starredProblemId: string;
+    problemId: string;
+    userId: string;
+    problem: DBProblem;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface UserRankAndAcceptanceRate {
+    allUsers: RankAndAcceptanceRateUsers[];
+    userRank: number;
+    userAcceptanceRate: number;
+    topUsers: RankAndAcceptanceRateUsers[];
+}
+
+export interface RankAndAcceptanceRateUsers {
+    userId: string;
+    name: string;
+    username: string;
+    email: string;
+}
+
 export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "https://leetcollab.vercel.app//" }),
     reducerPath: "api",
@@ -61,11 +84,11 @@ export const api = createApi({
     endpoints: (build) => ({
         getProblems: build.query<DBProblem[], void>({
             query: () => "api/problem/",
-            providesTags: (result, error, id) => ["Problems"],
+            providesTags: () => ["Problems"],
         }),
         getProblemByIdTitle: build.query<DBProblem, string>({
             query: (idTitle: string) => `api/problem/${idTitle}`,
-            providesTags: (result, error, idTitle) => ["ProblemByIdTitle"],
+            providesTags: () => ["ProblemByIdTitle"],
         }),
         getUserDataOnProblem: build.query<UserDataOnProblem, { idTitle: string; userId: string }>({
             query: ({ idTitle, userId }) => `api/problem/${idTitle}/${userId}`,
@@ -88,7 +111,7 @@ export const api = createApi({
             query: (userId: string) => `api/user/problem/submission/${userId}`,
             providesTags: ["UserSubmission"],
         }),
-        getUserStarredProblems: build.query<any[], string>({
+        getUserStarredProblems: build.query<UserStarredProblem[], string>({
             query: (userId: string) => `api/user/problem/starred/${userId}`,
             providesTags: ["UserStarredProblem"],
         }),
@@ -96,7 +119,7 @@ export const api = createApi({
             query: (userId: string) => `api/user/${userId}`,
             providesTags: ["UserProfile"],
         }),
-        getUserRankAndAcceptanceRate: build.query<{ userRank: number; userAcceptanceRate: number; topUsers: any[]; }, string>({
+        getUserRankAndAcceptanceRate: build.query<{ allUsers: RankAndAcceptanceRateUsers[],userRank: number; userAcceptanceRate: number; topUsers: RankAndAcceptanceRateUsers[]; }, string>({
             query: (userId: string) => `api/user/problem/${userId}`,
             providesTags: ["UserRankAndAcceptanceRate"],
         }),
@@ -125,7 +148,7 @@ export const api = createApi({
             invalidatesTags: ["UserStarredProblem"],
         }),
         updateUserProfile: build.mutation<void, { userId: string; patch: UpdateUserProfile }>({
-            query: ({ userId, ...patch }) => ({
+            query: ({ ...patch }) => ({
                 url: `/api/user`,
                 method: 'PUT',
                 body: patch,

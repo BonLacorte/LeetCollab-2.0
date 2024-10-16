@@ -33,7 +33,7 @@ const CardProblems = ({socket, username}: {socket: Socket | null, username: stri
     const [selectedProblem, setSelectedProblem] = useState<DBProblem | null>(null);
     
     const { data: problems, isLoading, error } = useGetProblemsQuery();
-    const { data: solvedProblemsData, isLoading: isSolvedLoading, error: solvedError } = useGetUserSolvedProblemsQuery(session?.user.id);
+    const { data: solvedProblemsData, isLoading: isSolvedLoading, error: solvedError } = useGetUserSolvedProblemsQuery(session?.user.id as string);
 
     const handleProblemClick = (problem: DBProblem) => {
         setSelectedProblem(problem);

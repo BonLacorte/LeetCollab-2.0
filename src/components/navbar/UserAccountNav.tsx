@@ -42,6 +42,8 @@ const UserAccountNav = ({ user }: Props) => {
 
     const { data: userProfile, isLoading: userProfileIsLoading, error: userProfileError } = useGetUserProfileQuery(user?.id || '');
 
+    if (userProfileIsLoading) return <div>Loading...</div>;
+
     return (
         <>
             <DropdownMenu>

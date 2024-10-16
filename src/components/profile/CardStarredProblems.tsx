@@ -1,8 +1,6 @@
 import { useGetUserStarredProblemsQuery } from '@/app/(state)/api';
-import { DBProblem } from '@/types/problems';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { Button } from '../ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
@@ -10,14 +8,12 @@ import { Badge } from '../ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Input } from '../ui/input';
 
-type Props = {}
-
 const ITEMS_PER_PAGE = 10
 
 const difficulties = ["Easy", "Medium", "Hard"];
 const categories = ["Array", "Linked List", "Stack", "Binary Search", "Dynamic Programming", "Graph", "Tree", "Math", "String", "Sliding Window", "Two Pointers", "Binary Search Tree", "Heap", "Greedy", "Backtracking", "Divide and Conquer", "Bit Manipulation", "Segment Tree", "Binary Indexed Tree", "Recursion", "Game Theory", "Combinatorics", "Geometry", "Interactive", "String Matching", "Rolling Hash", "Suffix Array", "Trie", "Data Stream", "Sorting"];
 
-const CardStarredProblems = (props: Props) => {
+const CardStarredProblems = () => {
     
     const { data: session } = useSession(); // Get the session data
     const [searchTerm, setSearchTerm] = useState('')

@@ -59,7 +59,7 @@ const Navbar = () => {
                             {username ? (
                                 <UserAccountNav user={{ name: username, id: session?.user?.id }} />
                             ) : (
-                                <Link href="/signin">
+                                <Link href="/sign-in">
                                     <Button className='bg-gray-900 hover:bg-gray-800 text-white font-semibold py-6 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50'>
                                         Sign In
                                     </Button>

@@ -77,7 +77,7 @@ const SignUpForm = () => {
                 const data = await res.json();
                 setErrors({ email: data.error || 'An error occurred' });
             } else {
-                router.push('/signin');
+                router.push('/sign-in');
             }
         } catch (error) {
             if (error instanceof z.ZodError) {

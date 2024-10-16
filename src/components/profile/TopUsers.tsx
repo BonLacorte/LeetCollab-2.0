@@ -17,10 +17,10 @@ const TopUsers = ({ topUsers, userRank, userAcceptanceRate }: Props) => {
     const currentUser = topUsers.find(user => user.userId === userId);
     const isUserInTop10 = displayUsers.some(user => user.userId === userId);
 
-    console.log("isUserInTop10: ", isUserInTop10);
+    // console.log("isUserInTop10: ", isUserInTop10);
 
     if (!isUserInTop10 && currentUser) {
-        console.log("currentUser is added to displayUsers");
+        // console.log("currentUser is added to displayUsers");
         displayUsers.push(currentUser);
     }
 

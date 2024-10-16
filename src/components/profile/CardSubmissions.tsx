@@ -1,20 +1,14 @@
 import { useGetUserSubmissionsQuery } from '@/app/(state)/api';
-import { DBProblem } from '@/types/problems';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { Button } from '../ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Badge } from '../ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Input } from '../ui/input';
-
-type Props = {}
 
 const ITEMS_PER_PAGE = 10
 
-const CardSubmissions = (props: Props) => {
+const CardSubmissions = () => {
     const { data: session } = useSession(); // Get the session data
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPage, setCurrentPage] = useState(1)

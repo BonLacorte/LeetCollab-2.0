@@ -1,21 +1,19 @@
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "./prisma";
-import bcrypt from "bcrypt";
-import { Adapter } from "next-auth/adapters";
+import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials';
+import prisma from './lib/prisma';
+import bcryptjs from "bcryptjs";
+import { signInSchema } from './components/auth/SignInForm';
+import { ZodError } from 'zod';
 
-export const authOptions: NextAuthOptions = {
-    adapter: PrismaAdapter(prisma) as Adapter,
-    session: {
-        strategy: "jwt",
-    },
-    pages: {
-        signIn: "/sign-in",
-    },
+export const {
+    handlers,
+    auth,
+    signIn,
+    signOut
+} = NextAuth({
+    // secret: process.env.NEXTAUTH_SECRET
     providers: [
-        CredentialsProvider({
-            name: "Credentials",
+        Credentials({
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" }
@@ -33,7 +31,7 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 }
 
-                const passwordMatch = await bcrypt.compare(credentials.password, user.password);
+                const passwordMatch = await bcryptjs.compare(credentials.password, user.password);
 
                 if (!passwordMatch) {
                     return null;
@@ -50,6 +48,20 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
+        authorized({ request: { nextUrl }, auth }) {
+            const isLoggedIn = !!auth?.user;
+            const { pathname } = nextUrl;
+            
+            if (pathname.startsWith("/signin") && isLoggedIn) {
+                return Response.redirect(new URL("/", nextUrl));
+            }
+            
+            if (!isLoggedIn && pathname !== "/signin") {
+                return Response.redirect(new URL("/signin", nextUrl));
+            }
+            
+            return isLoggedIn;
+        },
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
@@ -71,4 +83,5 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
     },
-};
+})
+

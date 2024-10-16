@@ -55,7 +55,7 @@ export interface UpdateUserProfile {
 }
 
 export const api = createApi({
-    baseQuery: fetchBaseQuery(),
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     reducerPath: "api",
     tagTypes: ["Problems", "ProblemByIdTitle", "UserDataOnProblem", "UserSolvedProblems", "UserLikedProblem", "UserStarredProblem", "UserSubmission", "UserProfile", "UserRankAndAcceptanceRate", "UpdateUserProfile"],
     endpoints: (build) => ({

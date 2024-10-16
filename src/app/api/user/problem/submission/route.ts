@@ -1,7 +1,7 @@
-import { db } from '@/lib/db'; // Adjust this import based on your Prisma setup
+import prisma from '@/lib/prisma'; // Adjust this import based on your Prisma setup
 import { NextResponse, NextRequest } from 'next/server';
 
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest ) => {
     
     if (req.method !== 'POST') {
         return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });
@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         // console.log("problemId 1: ", problemId);
 
         // Create a new record
-        await db.submission.create({
+        await prisma.submission.create({
         data: {
             userId,
             problemId: problemId,

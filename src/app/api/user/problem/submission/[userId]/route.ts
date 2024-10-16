@@ -1,11 +1,11 @@
-import { db } from '@/lib/db'; // Adjust this import based on your Prisma setup
+import prisma from '@/lib/prisma'; // Adjust this import based on your Prisma setup
 import { NextResponse, NextRequest } from 'next/server';
 
 export const GET = async (req: NextRequest, { params }: { params: { userId: string } }) => {
     const { userId } = params;
 
     try {
-        const submissions = await db.submission.findMany({
+        const submissions = await prisma.submission.findMany({
             where: { userId },
             include: {
                 problem: true,

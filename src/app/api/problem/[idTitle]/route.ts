@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import prisma from "@/lib/prisma";
 
 type ProblemParams = {
     idTitle: string;
@@ -10,7 +10,7 @@ export const GET = async (req: Request, { params }: { params: ProblemParams }) =
     console.log(params.idTitle);
     try {
         console.log("Fetching problem: ", params.idTitle);
-        const problem = await db.problem.findUnique({
+        const problem = await prisma.problem.findUnique({
             where: {
                 idTitle: params.idTitle,
             }

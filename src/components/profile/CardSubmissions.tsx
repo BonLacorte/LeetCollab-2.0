@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+
+
 import { useGetUserSubmissionsQuery } from '@/app/(state)/api';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSession } from 'next-auth/react';

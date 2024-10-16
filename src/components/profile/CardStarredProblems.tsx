@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+
 import { useGetUserStarredProblemsQuery } from '@/app/(state)/api';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useSession } from 'next-auth/react';

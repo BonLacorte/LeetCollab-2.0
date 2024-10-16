@@ -13,6 +13,6 @@ export const GET = async (req: NextRequest, { params }: { params: { userId: stri
         });
         return NextResponse.json(submissions);
     } catch (error) {
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ error: "Failed to fetch submissions", errorMessage: error }, { status: 500 });
     }
 }

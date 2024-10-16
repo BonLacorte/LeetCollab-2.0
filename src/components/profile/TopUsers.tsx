@@ -1,9 +1,9 @@
-import { User } from '@/types/problems';
+import { RankAndAcceptanceRateUsers } from '@/app/(state)/api';
 import { useSession } from 'next-auth/react';
 import React from 'react'
 
 type Props = {
-    topUsers: User[];
+    topUsers: RankAndAcceptanceRateUsers[];
     userRank: number;
     userAcceptanceRate: number;
 }
@@ -32,7 +32,7 @@ const TopUsers = ({ topUsers, userRank, userAcceptanceRate }: Props) => {
                     <li key={user.userId} className={`mb-2 ${user.userId === userId ? 'font-bold' : ''}`}>
                         <span className="font-semibold">{user.name}</span>
                         <span className="ml-2 text-gray-500">
-                            (Acceptance Rate: {user.acceptanceRate.toFixed(2)}%)
+                            (Acceptance Rate: {user.acceptanceRate?.toFixed(2)}%)
                         </span>
                     </li>
                 ))}

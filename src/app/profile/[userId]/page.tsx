@@ -1,3 +1,4 @@
+
 'use client'
 
 // import { useSession } from 'next-auth/react';
@@ -7,7 +8,6 @@ import { useSession } from 'next-auth/react';
 import { useGetUserSolvedProblemsQuery, useGetUserProfileQuery, useGetUserSubmissionsQuery, useGetProblemsQuery, useGetUserRankAndAcceptanceRateQuery } from '@/app/(state)/api';
 import Navbar from '@/components/navbar/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { DBProblem } from '@/types/problems';
 import CardSolvedProblems from '@/components/profile/CardSolvedProblems';
 import CardSubmissions from '@/components/profile/CardSubmissions';
 import Skills from '@/components/profile/Skills';
@@ -19,15 +19,6 @@ import { Button } from '@/components/ui/button';
 import EditProfileModal from '@/components/profile/EditProfileModal';
 import { useUpdateUserProfileMutation } from '@/app/(state)/api';
 import user from '@/lib/problems/images/user.jpg' 
-import Link from 'next/link';
-
-type FetchedSolvedProblems = {
-    problemId: string;
-    problem: DBProblem;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
 
 const Profile = ({ params }: { params: { userId: string } }) => {
 
@@ -36,10 +27,10 @@ const Profile = ({ params }: { params: { userId: string } }) => {
     console.log("session 2: ", session?.user);
 
     const { data: userProfile, isLoading } = useGetUserProfileQuery(params.userId);
-    const { data: solvedProblems, isLoading: solvedProblemsLoading, error: solvedProblemsError } = useGetUserSolvedProblemsQuery(params.userId);
-    const { data: submissions, isLoading: submissionsLoading, error: submissionsError } = useGetUserSubmissionsQuery(params.userId);
-    const { data: problems, isLoading: problemsLoading, error: problemsError } = useGetProblemsQuery();
-    const { data: userRankAndAcceptanceRate, isLoading: userRankAndAcceptanceRateLoading, error: userRankAndAcceptanceRateError } = useGetUserRankAndAcceptanceRateQuery(params.userId);
+    const { data: solvedProblems, isLoading: solvedProblemsLoading } = useGetUserSolvedProblemsQuery(params.userId);
+    const { isLoading: submissionsLoading } = useGetUserSubmissionsQuery(params.userId);
+    const { data: problems, isLoading: problemsLoading } = useGetProblemsQuery();
+    const { data: userRankAndAcceptanceRate, isLoading: userRankAndAcceptanceRateLoading } = useGetUserRankAndAcceptanceRateQuery(params.userId);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [updateUserProfile] = useUpdateUserProfileMutation();
     
@@ -48,7 +39,7 @@ const Profile = ({ params }: { params: { userId: string } }) => {
     // console.log("solvedProblems: ", solvedProblems);
     // console.log("submissions: ", submissions);
     // console.log("problems: ", problems);
-    // console.log("userRankAndAcceptanceRate: ", userRankAndAcceptanceRate);
+    console.log("userRankAndAcceptanceRate: ", userRankAndAcceptanceRate);
 
     // get the total of easy, medium, and hard problems
     // get the total of easy, medium, and hard problems

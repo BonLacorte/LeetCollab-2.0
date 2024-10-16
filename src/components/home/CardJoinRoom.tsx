@@ -1,5 +1,6 @@
 
 
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Socket } from 'socket.io-client'; // Importing Socket.IO client
@@ -9,7 +10,7 @@ import { toast } from '@/hooks/use-toast';
 
 const CardJoinRoom = ({socket, username}: {socket: Socket | null, username: string | null}) => {
     const [roomId, setRoomId] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState<string | null>(null);
 
     const router = useRouter();
 

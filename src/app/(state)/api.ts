@@ -75,10 +75,13 @@ export interface RankAndAcceptanceRateUsers {
     name: string;
     username: string;
     email: string;
+    acceptanceRate: number | null;
+    totalSolvedProblems: number | null;
+    ranking: number | null;
 }
 
 export const api = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: "https://leetcollab.vercel.app//" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
     reducerPath: "api",
     tagTypes: ["Problems", "ProblemByIdTitle", "UserDataOnProblem", "UserSolvedProblems", "UserLikedProblem", "UserStarredProblem", "UserSubmission", "UserProfile", "UserRankAndAcceptanceRate", "UpdateUserProfile"],
     endpoints: (build) => ({

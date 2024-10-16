@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
 import { NextResponse, NextRequest } from 'next/server';
 
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest) => {
 
     // if (req.method !== 'POST') {
     //     return NextResponse.json({ message: 'Method not allowed' }, { status: 405 });

@@ -2,8 +2,6 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials';
 import prisma from './lib/prisma';
 import bcryptjs from "bcryptjs";
-import { signInSchema } from './components/auth/SignInForm';
-import { ZodError } from 'zod';
 
 export const {
     handlers,
@@ -24,14 +22,14 @@ export const {
                 }
 
                 const user = await prisma.user.findUnique({
-                    where: { email: credentials.email }
+                    where: { email: credentials.email as string }
                 });
 
                 if (!user) {
                     return null;
                 }
 
-                const passwordMatch = await bcryptjs.compare(credentials.password, user.password);
+                const passwordMatch = await bcryptjs.compare(credentials.password as string, user.password as string);
 
                 if (!passwordMatch) {
                     return null;

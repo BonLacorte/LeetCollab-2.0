@@ -42,7 +42,7 @@ export const GET = async (req: Request, { params }: { params: ProblemUserParams 
         }
         return NextResponse.json({ data });
     } catch (error) {
-        return NextResponse.json({ error: "Failed to fetch problem" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to fetch problem", errorMessage: error }, { status: 500 });
     }
 }
 

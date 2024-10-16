@@ -89,8 +89,8 @@ const Homepage = () => {
                     ) : (
                         <>
                             {/* <div className="container mx-auto px-4 pt-8"> */}
-                                <CardJoinRoom socket={socket} username={username}/>
-                                <CardProblems socket={socket} username={username}/>
+                                <CardJoinRoom socket={socket} username={username || ""} />
+                                <CardProblems socket={socket} username={username || ""} />
                         </>
                     )}
                 </div>

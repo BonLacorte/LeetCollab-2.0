@@ -18,7 +18,6 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from '../ui/button'
 import { useGetUserProfileQuery } from '@/app/(state)/api'
@@ -40,7 +39,7 @@ const UserAccountNav = ({ user }: Props) => {
         })
     }
 
-    const { data: userProfile, isLoading: userProfileIsLoading, error: userProfileError } = useGetUserProfileQuery(user?.id || '');
+    const { data: userProfile, isLoading: userProfileIsLoading } = useGetUserProfileQuery(user?.id || '');
 
     if (userProfileIsLoading) return <div>Loading...</div>;
 

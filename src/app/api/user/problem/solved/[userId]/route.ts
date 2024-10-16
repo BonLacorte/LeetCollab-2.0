@@ -15,6 +15,6 @@ export const GET = async (req: Request, { params }: { params: { userId: string }
         });
         return NextResponse.json(solvedProblems);
     } catch (error) {
-        return NextResponse.json({ error: "Failed to fetch solved problems" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to fetch solved problems", errorMessage: error }, { status: 500 });
     }
 }

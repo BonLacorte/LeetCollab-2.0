@@ -12,6 +12,6 @@ export const GET = async (req: Request, { params }: { params: { userId: string }
         });
         return NextResponse.json(starredProblems);
     } catch (error) {
-        return NextResponse.json({ error: "Failed to fetch starred problems" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to fetch starred problems", errorMessage: error }, { status: 500 });
     }
 }

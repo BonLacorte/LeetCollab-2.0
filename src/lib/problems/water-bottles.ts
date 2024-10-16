@@ -1,3 +1,4 @@
+
 import assert from "assert";
 import { Problem } from "@/types/problems";
 import example1 from "./images/water-bottles-1.png";

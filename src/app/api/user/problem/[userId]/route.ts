@@ -1,3 +1,4 @@
+import { RankAndAcceptanceRateUsers } from '@/app/(state)/api';
 import prisma from '@/lib/prisma';
 import { NextResponse, NextRequest } from 'next/server';
 
@@ -10,7 +11,8 @@ export const GET = async (req: NextRequest, { params }: { params: { userId: stri
     let userAcceptanceRate: number = 0;
 
     // create an array for all users
-    let allUsers = [];
+    let allUsers: RankAndAcceptanceRateUsers[] = [];
+    let user: RankAndAcceptanceRateUsers;
 
     // each user has the following properties: userId, username, name, email, acceptanceRate, ranking, totalSolvedProblems
     allUsers = await prisma.user.findMany({
@@ -20,11 +22,17 @@ export const GET = async (req: NextRequest, { params }: { params: { userId: stri
             name: true,
             email: true,
         }
-    });
+    }).then(users => users.map(user => ({
+        ...user,
+        acceptanceRate: 0,
+        totalSolvedProblems: 0,
+        ranking: 0
+    })));
+
 
 
     // get the total number of submissions of each user and the number of accepted submissions of each user to calculate the acceptance rate of each user (acceptanceRate) and place them in each user object
-    for (let user of allUsers) {
+    for (user of allUsers) {
         const totalSubmissions = await prisma.submission.count({
             where: {
                 userId: user.userId
@@ -58,7 +66,7 @@ export const GET = async (req: NextRequest, { params }: { params: { userId: stri
         // create a formula to rank the users based on their acceptance rate and the number of solved problems
         // ranking = (acceptanceRate * 0.7) + (totalSolvedProblems * 0.3)
 
-    allUsers.sort((a, b) => (b.acceptanceRate * 0.7) + (b.totalSolvedProblems * 0.3) - ((a.acceptanceRate * 0.7) + (a.totalSolvedProblems * 0.3)));
+    allUsers.sort((a, b) => ((b.acceptanceRate! * 0.7) + (b.totalSolvedProblems! * 0.3)) - ((a.acceptanceRate! * 0.7) + (a.totalSolvedProblems! * 0.3)));
 
     for (let i = 0; i < allUsers.length; i++) {
         allUsers[i].ranking = i + 1;
@@ -70,10 +78,10 @@ export const GET = async (req: NextRequest, { params }: { params: { userId: stri
     const topUsers = allUsers.slice(0, 10);
 
     // get the user's rank and acceptance rate from the allUsers array and place them in variables (userRank, userAcceptanceRate)
-    const user = allUsers.find(user => user.userId === userId);
-    if (user) {
-        userRank = user.ranking as number;
-        userAcceptanceRate = user.acceptanceRate as number;
+    const aUser = allUsers.find(user => user.userId === userId);
+    if (aUser) {
+        userRank = aUser.ranking as number;
+        userAcceptanceRate = aUser.acceptanceRate as number;
     }
 
     console.log(userRank, userAcceptanceRate);

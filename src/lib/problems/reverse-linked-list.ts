@@ -1,5 +1,5 @@
 
-/* eslint-disable @typescript-eslint/no-this-alias */
+
 import assert from "assert";
 import { Problem } from "@/types/problems";
 // import example from "./images/reverseLL.jpg";

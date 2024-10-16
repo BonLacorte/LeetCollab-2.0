@@ -1,5 +1,5 @@
 
-/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+
 import { useGetUserSolvedProblemsQuery } from '@/app/(state)/api';
 import { DBProblem } from '@/types/problems';
 import { useSession } from 'next-auth/react';

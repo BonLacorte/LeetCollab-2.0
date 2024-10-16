@@ -50,12 +50,12 @@ export const {
             const isLoggedIn = !!auth?.user;
             const { pathname } = nextUrl;
             
-            if (pathname.startsWith("/signin") && isLoggedIn) {
+            if (pathname.startsWith("/sign-in") && isLoggedIn) {
                 return Response.redirect(new URL("/", nextUrl));
             }
             
-            if (!isLoggedIn && pathname !== "/signin") {
-                return Response.redirect(new URL("/signin", nextUrl));
+            if (!isLoggedIn && pathname !== "/sign-in") {
+                return Response.redirect(new URL("/sign-in", nextUrl));
             }
             
             return isLoggedIn;

@@ -35,7 +35,7 @@ const UserAccountNav = ({ user }: Props) => {
     const handleSignOut = () => {
         signOut({
             redirect: true,
-            callbackUrl: `${window.location.origin}/signin`
+            callbackUrl: `${window.location.origin}/sign-in`
         })
     }
 

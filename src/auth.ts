@@ -70,6 +70,7 @@ export const {
             }
             return token;
         },
+        
         async session({ session, token }) {
             if (session.user) {
                 session.user.id = token.id as string;
@@ -80,6 +81,19 @@ export const {
             }
             return session;
         },
+
+        signIn: async ({ user, account }) => {
+            console.log("signIn", user);
+            
+            if (account?.provider === "credentials") {
+                // const user = await prisma.user.findUnique({
+                //     where: { email: account.email as string }
+                // });
+                return true;
+            } else {
+                return false;
+            }
+        }
     },
 })
 

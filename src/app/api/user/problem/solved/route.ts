@@ -31,7 +31,7 @@ export const POST = async (req: NextRequest) => {
         await prisma.solvedProblems.create({
         data: {
             userId,
-            problemId: problemId.problemId,
+            problemId: problemId,
         },
         });
 

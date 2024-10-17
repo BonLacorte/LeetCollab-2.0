@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect } from 'react'
-// import { usePathname } from 'next/navigation';
 import StoreProvider, { useAppSelector } from '@/app/redux';
 
 const LeetCollabLayout = ({children} : {children: React.ReactNode}) => {

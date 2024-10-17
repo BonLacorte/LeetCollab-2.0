@@ -1,10 +1,10 @@
 
 'use client'
 
-// import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { useSession } from 'next-auth/react';
+import { useSocket } from '@/components/provider/SocketProvider';
 import { useGetUserSolvedProblemsQuery, useGetUserProfileQuery, useGetUserSubmissionsQuery, useGetProblemsQuery, useGetUserRankAndAcceptanceRateQuery } from '@/app/(state)/api';
 import Navbar from '@/components/navbar/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -23,6 +23,10 @@ import user from '@/lib/problems/images/user.jpg'
 const Profile = ({ params }: { params: { userId: string } }) => {
 
     const { data: session } = useSession();
+
+    const socket = useSocket();
+    console.log("socket at Profile: ", socket);
+
     console.log("session 1: ", session);
     console.log("session 2: ", session?.user);
 
@@ -36,13 +40,8 @@ const Profile = ({ params }: { params: { userId: string } }) => {
     
     console.log("userId: ", params.userId);
     console.log("userProfile: ", userProfile);
-    // console.log("solvedProblems: ", solvedProblems);
-    // console.log("submissions: ", submissions);
-    // console.log("problems: ", problems);
     console.log("userRankAndAcceptanceRate: ", userRankAndAcceptanceRate);
 
-    // get the total of easy, medium, and hard problems
-    // get the total of easy, medium, and hard problems
     const totalEasyProblems = problems && Array.isArray(problems) 
     ? problems.filter((problem) => problem.difficulty === "Easy").length 
     : 0;
@@ -53,11 +52,6 @@ const Profile = ({ params }: { params: { userId: string } }) => {
     ? problems.filter(problem => problem.difficulty === "Hard").length 
     : 0;
 
-    // console.log("totalEasyProblems: ", totalEasyProblems);
-    // console.log("totalMediumProblems: ", totalMediumProblems);
-    // console.log("totalHardProblems: ", totalHardProblems);
-
-    // get the total of solved easy, medium, and hard problems
     const totalEasySolved = solvedProblems && Array.isArray(solvedProblems)
     ? solvedProblems.filter((solvedProblem: any) => solvedProblem.problem.difficulty === "Easy").length
     : 0;
@@ -67,10 +61,6 @@ const Profile = ({ params }: { params: { userId: string } }) => {
     const totalHardSolved = solvedProblems && Array.isArray(solvedProblems)
     ? solvedProblems.filter((solvedProblem: any) => solvedProblem.problem.difficulty === "Hard").length
     : 0;
-
-    // console.log("Total Easy Solved:", totalEasySolved);
-    // console.log("Total Medium Solved:", totalMediumSolved);
-    // console.log("Total Hard Solved:", totalHardSolved);
 
     // Calculate the total solved problems and total problems
     const totalSolved = totalEasySolved + totalMediumSolved + totalHardSolved;

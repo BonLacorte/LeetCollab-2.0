@@ -84,7 +84,12 @@ const CardProblems = ({socket, username}: {socket: Socket | null, username: stri
     return (
         <div className="container mx-auto p-4">
         {isLoading && isSolvedLoading ? (
-            <div><p>Loading...</p></div>
+            <div className='flex justify-center'>
+                <div className="flex flex-col justify-center items-center">
+                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+                    <p className='text-lg font-medium text-gray-900 mt-4'>Loading...</p>
+                </div>
+            </div>
         ) : (
             <>
                 <ConfirmationModal

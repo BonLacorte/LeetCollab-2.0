@@ -16,12 +16,14 @@ const Homepage = () => {
     const { data: session } = useSession();
     const username = session?.user?.username;
     const socket = useSocket();
+
     const router = useRouter();
     const [inRoom, setInRoom] = useState(false);
     const [roomId, setRoomId] = useState<string | null>(null);
     const [problemIdTitle, setProblemIdTitle] = useState<string | undefined>(undefined);
     useEffect(() => {
         if (socket) {
+            console.log('socket at Homepage: ', socket);
             socket.emit('isUserInRoom', { username }, (response: { success: boolean, isInRoom: boolean, roomId: string | null, problemTitle: string | undefined }) => {
                 if (response.success) {
                     setInRoom(response.isInRoom);

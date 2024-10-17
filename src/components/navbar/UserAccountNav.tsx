@@ -41,7 +41,11 @@ const UserAccountNav = ({ user }: Props) => {
 
     const { data: userProfile, isLoading: userProfileIsLoading } = useGetUserProfileQuery(user?.id || '');
 
-    if (userProfileIsLoading) return <div>Loading...</div>;
+    if (userProfileIsLoading) return <div className='flex justify-center'>
+    <div className="flex flex-col justify-center items-center">
+        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
+    </div>
+</div>;
 
     return (
         <>

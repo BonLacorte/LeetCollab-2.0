@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-// import GoogleSignInButton from '.../'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
@@ -43,7 +42,7 @@ const SignInForm = () => {
         })
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
             // Validate the form data

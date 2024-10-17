@@ -9,7 +9,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:8000'); // Your Socket.IO server URL
+        const newSocket = io('https://leetcollab-socket.onrender.com'); // Your Socket.IO server URL
         setSocket(newSocket);
 
         return () => {
